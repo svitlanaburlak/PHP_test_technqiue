@@ -11,6 +11,7 @@ class Cart {
     //====================
 
     /** @var int */
+    // can be transformed into VO
     private $id;
 
     /** @var int */
@@ -31,29 +32,19 @@ class Cart {
     }
 
     //====================
-    // Setters - may not be necessary for VO
-    //====================
-
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-
-    public function setAmount(int $amount): self
-    {
-        $this->amount = $amount;
-        return $this;
-    }
-
-    //====================
     // Methods
     //====================
 
-    public function __construct()
+    public function calculateCost(int $amount, Coupon $coupon): int
     {
-        return;
+        if ($amount <= 50) {
+            throw new \InvalidArgumentException('You can not use coupon for the cart of less than 50€ ');
+        }
+
+        $finalCost = $amount - ($coupon->applyToCart())->discount;
+        
+        return $finalCost;
     }
 
 }
+
