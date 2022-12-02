@@ -84,9 +84,11 @@ class Coupon {
         // check how old is coupon
         $difference = $this->createdAt->diff(new DateTime());
 
-        if( $difference->format('%a') > 60) {
+        if( intval($difference->format('%a')) > 60) {
             return false;
         }
+
+        return true;
         
     }
 

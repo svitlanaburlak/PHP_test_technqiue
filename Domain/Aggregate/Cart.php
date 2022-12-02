@@ -18,7 +18,7 @@ class Cart {
     private $amount;
 
     //====================
-    // Getters
+    // Getters & Setters
     //====================
 
     public function getId(): int
@@ -30,21 +30,27 @@ class Cart {
     {
         return $this->amount;
     }
+ 
+    public function setAmount($amount) : self
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
 
     //====================
     // Methods
     //====================
 
-    public function calculateCost(int $amount, Coupon $coupon): int
+    public function calculateCost(Coupon $coupon): int
     {
-        if ($amount <= 50) {
+        if ($this->amount <= 50) {
             throw new \InvalidArgumentException('You can not use coupon for the cart of less than 50€ ');
         }
 
-        $finalCost = $amount - ($coupon->applyToCart())->discount;
+        $finalCost = $this->amount - ($coupon->applyToCart())->getDiscount();
         
         return $finalCost;
     }
-
 }
 
