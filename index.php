@@ -33,9 +33,9 @@
                         $cart->setAmount(intval($_POST["cart"]));
 
                         if (isset($_POST["coupon"])) {
-                            $coupon = new Coupon("coupon", intval($_POST["coupon"]), true, 0 );
+                            $coupon = new Coupon(intval($_POST["coupon"]), true, 0 );
                             // var_dump($coupon);
-                            echo $cart->calculateCost($coupon);
+                            echo $cart->calculateCost($coupon) . " with coupon #{$coupon->getCode()}";
                         }
                     };
                     

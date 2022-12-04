@@ -17,3 +17,7 @@ atteint, défini à 50€
 inutilisable, pour toujours
 - un coupon révoqué ne peut pas être réactivé (i.e. on ne peut
 pas révoquer une révocation)
+
+###
+cqrs + event sourcing
+https://github.com/thiagomarini/binocular

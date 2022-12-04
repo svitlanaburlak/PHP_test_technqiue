@@ -11,7 +11,7 @@ class Cart {
     //====================
 
     /** @var int */
-    // can be transformed into VO
+    // Id can be transformed into VO / Common Type
     private $id;
 
     /** @var int */
