@@ -5,6 +5,9 @@
 composer install
 ```
 
+## index.php
+in root is simple interface
+
 ## Coupon :
 - id
 - code unique

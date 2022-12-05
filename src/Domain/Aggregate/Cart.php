@@ -2,6 +2,7 @@
 
 namespace App\Domain\Aggregate;
 
+use Common\Type\Id;
 use App\Domain\VO\Coupon;
 
 class Cart {
@@ -11,8 +12,7 @@ class Cart {
     //====================
 
     /** @var int */
-    // Id can be transformed into VO / Common Type
-    private $id;
+    private Id $id;
 
     /** @var int */
     private $amount;

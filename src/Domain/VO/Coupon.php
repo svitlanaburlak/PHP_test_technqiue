@@ -3,16 +3,17 @@
 namespace App\Domain\VO;
 
 use DateTime;
+use Common\Type\Id;
+use Common\Type\ValueObject;
 
-class Coupon {
-    
+class Coupon extends ValueObject
+{
     //====================
     // Properties
     //====================
 
     /** @var int */
-    // Id can be transformed into VO / Common Type
-    private $id;
+    private Id $id;
 
     /** @var string */
     private $code;
@@ -58,6 +59,11 @@ class Coupon {
         return $this->status;
     }
 
+    public function getTimesUsed()
+    {
+        return $this->timesUsed;
+    }
+
     //====================
     // Methods
     //====================
@@ -72,7 +78,7 @@ class Coupon {
             throw new \InvalidArgumentException("Number of times used should be a positive value: {$timesUsed}.");
         }
 
-        $this->code = uniqid();
+        $this->code = 'MERRYXMAS';
         $this->discount = $discount;
         $this->status = $status;
         $this->timesUsed = $timesUsed;
@@ -128,12 +134,15 @@ class Coupon {
         
     }
 
-    public function equalTo(Coupon $other) {
-        return $this->code === $other->code && 
-        $this->discount === $other->discount &&
-        $this->status === $other->status &&
-        $this->timesUsed === $other->timesUsed &&
-        $this->createdAt === $other->createdAt;
+    protected function equalTo(ValueObject $other) : bool
+    {
+        return 
+        ($other->getCode() === $this->getCode() && 
+        $other->getDiscount() === $this->getDiscount() &&
+        $other->getStatus() === $this->getStatus() &&
+        $other->getTimesUsed() === $this->getTimesUsed() &&
+        $other->getCreatedAt() === $this->getCreatedAt());
+        ;
     }
 
 }
