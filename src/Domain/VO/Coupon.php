@@ -5,6 +5,7 @@ namespace App\Domain\VO;
 use DateTime;
 use Common\Type\Id;
 use Common\Type\ValueObject;
+use App\Domain\CommonValidator;
 
 class Coupon extends ValueObject
 {
@@ -70,20 +71,20 @@ class Coupon extends ValueObject
 
     public function __construct(int $discount, bool $status, int $timesUsed)
     {
-        if ($discount < 0) {
-            throw new \InvalidArgumentException("Discount should be a positive value: {$discount}.");
-        }
 
-        if ($timesUsed < 0) {
-            throw new \InvalidArgumentException("Number of times used should be a positive value: {$timesUsed}.");
-        }
+        CommonValidator::validateDiscount($discount);
+
+        CommonValidator::validateTimes($timesUsed);
 
         $this->code = 'MERRYXMAS';
         $this->discount = $discount;
         $this->status = $status;
         $this->timesUsed = $timesUsed;
         $this->createdAt = new DateTime();
+        // to test coupon older than 2 months
+        // $this->createdAt = new DateTime('2022-10-04 14:52:48');
     }
+
 
     public function checkDate() {
 
@@ -103,37 +104,23 @@ class Coupon extends ValueObject
         return new self($this->discount, $this->status = false, $this->timesUsed);
     }
 
-    public function checkStatus() {
-
-        if( $this->status == false) {
-            return false;
-        }
-
-        return true;
-        
-    }
-
     public function applyToCart() {
 
-        // this validations can be separated into separate validator class.
-        if ($this->timesUsed >= 10) {
-            $this->deactivate();
-            throw new \DomainException("You can not use one coupon more than 10 times");
-        }
+        CommonValidator::validateTimesUsed($this->timesUsed);
 
-        if (!$this->checkStatus()) {
-            throw new \DomainException("This coupon is not valid anymore");
-        }
+        CommonValidator::validateStatus($this->status);
 
-        if (!$this->checkDate()) {
-            $this->deactivate();
-            throw new \DomainException("You can not use coupon older than 2 months");
-        }
+        CommonValidator::validateDate($this->createdAt);
 
         return new self($this->discount, $this->status, $this->timesUsed++ );
         
     }
 
+    /**
+     * @param ValueObject|self $o
+     *
+     * @return bool
+     */
     protected function equalTo(ValueObject $other) : bool
     {
         return 

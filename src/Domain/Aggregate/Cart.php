@@ -4,6 +4,7 @@ namespace App\Domain\Aggregate;
 
 use Common\Type\Id;
 use App\Domain\VO\Coupon;
+use App\Domain\CommonValidator;
 
 class Cart {
 
@@ -44,9 +45,7 @@ class Cart {
 
     public function calculateCost(Coupon $coupon): int
     {
-        if ($this->amount <= 50) {
-            throw new \InvalidArgumentException('You can not use coupon for the cart of less than 50€ ');
-        }
+        CommonValidator::validateAmount($this->amount);
 
         $finalCost = $this->amount - ($coupon->applyToCart())->getDiscount();
         

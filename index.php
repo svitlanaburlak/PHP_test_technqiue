@@ -28,13 +28,16 @@
 
             <button> Your final cost is : </button>
                 <?php
-                if (isset($_POST["cart"])) 
+                    if (isset($_POST["cart"])) 
                     {
                         $cart = new Cart();
                         $cart->setAmount(intval($_POST["cart"]));
 
                         if (isset($_POST["coupon"])) {
                             $coupon = new Coupon(intval($_POST["coupon"]), true, 0 );
+                            // to test different types of coupon
+                            // $coupon = new Coupon(intval($_POST["coupon"]), false, 0 );
+                            // $coupon = new Coupon(intval($_POST["coupon"]), true, 10 );
                             // var_dump($coupon);
                             echo $cart->calculateCost($coupon) . " with coupon #{$coupon->getCode()}";
                         }
