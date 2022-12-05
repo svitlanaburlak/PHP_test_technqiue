@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\VO;
+namespace App\Domain\VO;
 
 use DateTime;
 

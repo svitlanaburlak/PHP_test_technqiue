@@ -7,11 +7,11 @@
 	<body>
 
     <?php
-        use Domain\Aggregate\Cart;
-        use Domain\VO\Coupon;
+        use App\Domain\Aggregate\Cart;
+        use App\Domain\VO\Coupon;
 
-        require __DIR__ . "/Domain/Aggregate/Cart.php";
-        require __DIR__ . "/Domain/VO/Coupon.php";
+        require __DIR__ . "/src/Domain/Aggregate/Cart.php";
+        require __DIR__ . "/src/Domain/VO/Coupon.php";
     ?>
 
     <form method="post">

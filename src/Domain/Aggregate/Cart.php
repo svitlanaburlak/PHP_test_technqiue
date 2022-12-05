@@ -1,8 +1,8 @@
 <?php
 
-namespace Domain\Aggregate;
+namespace App\Domain\Aggregate;
 
-use Domain\VO\Coupon;
+use App\Domain\VO\Coupon;
 
 class Cart {
 

@@ -1,5 +1,10 @@
 # PHP_test_technqiue
 
+## Installation:
+```sh
+composer install
+```
+
 ## Coupon :
 - id
 - code unique
