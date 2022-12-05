@@ -1,5 +1,20 @@
 # PHP_test_technqiue
 
+## Installation:
+Cloner le repo
+
+## branch main
+essai de ValueObjects sans frameworks/libraries
+
+## branch hexagonal 
+installation des bundles afin de suivre ddd et Hexagonal Architecture
+```sh
+composer install
+```
+
+## [index.php](index.php)
+very simple interface to test
+
 ## Coupon :
 - id
 - code unique
@@ -17,7 +32,3 @@ atteint, défini à 50€
 inutilisable, pour toujours
 - un coupon révoqué ne peut pas être réactivé (i.e. on ne peut
 pas révoquer une révocation)
-
-###
-cqrs + event sourcing
-https://github.com/thiagomarini/binocular
