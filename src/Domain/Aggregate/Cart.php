@@ -5,9 +5,15 @@ namespace App\Domain\Aggregate;
 use Common\Type\Id;
 use App\Domain\VO\Coupon;
 use App\Domain\CommonValidator;
+use App\Application\Command\CartWasCreatedEvent;
+use Broadway\EventSourcing\EventSourcedAggregateRoot;
 
-class Cart {
-
+/**
+ * Cart has to extends EventSourcedAggregateRoot of Broadway 
+ * to be able to apply events and get the data from the database
+ */
+class Cart extends EventSourcedAggregateRoot
+{
     //====================
     // Properties
     //====================
@@ -50,6 +56,36 @@ class Cart {
         $finalCost = $this->amount - ($coupon->applyToCart())->getDiscount();
         
         return $finalCost;
+    }
+
+    // Broadway requirements
+    public static function create(
+        int $cartId,
+        int $cartAmount
+
+    ): self {
+        $cart = new static();
+        $cart->apply(
+            new CartWasCreatedEvent($cartId, $cartAmount)
+        );
+ 
+        return $cart;
+    }
+
+    protected function applyCartWasCreatedEvent(CartWasCreatedEvent $event): void
+    {
+        $this->id = $event->id;
+        $this->amount = $event->amount;
+    }
+
+    public static function instantiateForReconstitution(): self
+    {
+        return new static();
+    }
+
+    public function getAggregateRootId(): string
+    {
+        return $this->getId();
     }
 }
 
