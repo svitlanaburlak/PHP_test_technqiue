@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
-use DateTime;
+use DateTimeImmutable;
 
 class CommonValidator
 {
@@ -33,8 +33,8 @@ class CommonValidator
         }
     }
 
-    public static function validateDate(DateTime $createdAt) {
-        $difference = $createdAt->diff(new DateTime());
+    public static function validateDate(DateTimeImmutable $createdAt) {
+        $difference = $createdAt->diff(new DateTimeImmutable());
 
         if( intval($difference->format('%a')) > 60) {
             throw new \DomainException("You can not use coupon older than 2 months");

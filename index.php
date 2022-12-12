@@ -11,8 +11,6 @@
         use App\Domain\VO\Coupon;
 
         require 'vendor/autoload.php';
-        require __DIR__ . "/src/Domain/Aggregate/Cart.php";
-        require __DIR__ . "/src/Domain/VO/Coupon.php";
     ?>
 
     <form method="post">

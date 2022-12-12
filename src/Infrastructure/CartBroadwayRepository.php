@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application;
+namespace App\Infrastructure;
 
 use Common\Type\Id;
 use App\Domain\Aggregate\Cart;

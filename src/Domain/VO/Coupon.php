@@ -2,8 +2,8 @@
 
 namespace App\Domain\VO;
 
-use DateTime;
 use Common\Type\Id;
+use DateTimeImmutable;
 use Common\Type\ValueObject;
 use App\Domain\CommonValidator;
 
@@ -22,7 +22,7 @@ class Coupon extends ValueObject
     /** @var int */
     private $discount;
 
-    /** @var DateTime */
+    /** @var DateTimeImmutable */
     private $createdAt;
 
     /** @var bool */
@@ -50,7 +50,7 @@ class Coupon extends ValueObject
         return $this->discount;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -80,17 +80,19 @@ class Coupon extends ValueObject
         $this->discount = $discount;
         $this->status = $status;
         $this->timesUsed = $timesUsed;
-        $this->createdAt = new DateTime();
+        $this->createdAt = new DateTimeImmutable();
         // to test coupon older than 2 months
         // $this->createdAt = new DateTime('2022-10-04 14:52:48');
     }
 
 
-    public function checkDate() {
+    public function isNotExpired() {
 
         // check how old is coupon
-        $difference = $this->createdAt->diff(new DateTime());
+        $difference = $this->createdAt->diff(new DateTimeImmutable());
 
+        //todo function has to count 2 months not 60 calendar days, it will not give correct result cause of Feb
+        // $datetime->format(DateTime::ATOM); output: '2021-01-03T02:30:00+01:00'
         if( intval($difference->format('%a')) > 60) {
             return false;
         }
@@ -112,7 +114,7 @@ class Coupon extends ValueObject
 
         CommonValidator::validateDate($this->createdAt);
 
-        return new self($this->discount, $this->status, $this->timesUsed++ );
+        return new self($this->discount, $this->status, ++$this->timesUsed );
         
     }
 
